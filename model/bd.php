@@ -3,73 +3,69 @@
 /**
  * Classe onde foi implementada o acesso ao BD
  */
-class bd {
+class bd
+{
 
-	private $servidor;
-	private $usuario;
-	private $senha;
-	private $banco;
-	private $conexao;
-
-
-	function bd($pr_flg_login) {
-
-        if (substr($_SERVER["PHP_SELF"],0,7) == '/desen/') { // Ambiente de desenvolvimento
-
-            $this -> servidor = "200.147.61.79"; // Ambiente de desenvolvimento
-            $this -> usuario = "ehojeapp3";
-            $this -> senha = "assanhada13@";
-            $this -> banco = "ehojeapp3";
+    private $servidor;
+    private $usuario;
+    private $senha;
+    private $banco;
+    private $conexao;
 
 
-        } else { // Ambiente de produção
+    function bd($pr_flg_login)
+    {
 
-            $this -> servidor = "187.17.103.156";
-            $this -> usuario = "ehojeapp2";
-            $this -> senha = "assanhada13";
-            $this -> banco = "ehojeapp2";
+        $this->servidor = "mysql.ehojeapp.com.br";
+        $this->usuario = "ehojeapp";
+        $this->senha = "delivery5610";
+        $this->banco = "ehojeapp";
 
-        }
+    }
 
-	}
+    function conecta()
+    {
 
-	function conecta() {
+        $this->conexao = mysql_connect($this->servidor, $this->usuario, $this->senha);
+        mysql_select_db($this->banco);
+        mysql_set_charset('UTF8', $this->conexao);
 
-		$this -> conexao = mysql_connect($this -> servidor, $this -> usuario, $this -> senha);
-		mysql_select_db($this -> banco);
-		mysql_set_charset('UTF8', $this->conexao);
+    }
 
-	}
+    function desconecta()
+    {
 
-	function desconecta() {
+        mysql_close($this->conexao);
 
-		mysql_close($this -> conexao);
+    }
 
-	}
+    function incluiRegistro($par_tabela, $par_campos, $par_valores)
+    {
 
-	function incluiRegistro($par_tabela, $par_campos, $par_valores) {
+        $vr_sql = 'insert into ' . $par_tabela . ' ( ' . $par_campos . ' ) VALUES (' . $par_valores . ' )';
 
-		$vr_sql = 'insert into ' . $par_tabela . ' ( ' . $par_campos . ' ) VALUES (' . $par_valores . ' )';
+        mysql_query($vr_sql, $this->conexao);
 
-		mysql_query($vr_sql, $this -> conexao);
+        return mysql_insert_id($this->conexao);
 
-		return  mysql_insert_id($this -> conexao);
+    }
 
-	}
+    function editaRegistro($par_tabela, $par_campos_valores, $par_filtro, $par_valor)
+    {
 
-	function editaRegistro($par_tabela, $par_campos_valores, $par_filtro, $par_valor) {
+        $vr_sql = "UPDATE $par_tabela SET $par_campos_valores where $par_filtro = $par_valor";
 
-		$vr_sql = "UPDATE $par_tabela SET $par_campos_valores where $par_filtro = $par_valor";
+        mysql_query($vr_sql);
+    }
 
-		mysql_query($vr_sql);
-	}
+    function deletaRegistro($par_tabela, $par_campo, $par_id)
+    {
 
-	function deletaRegistro($par_tabela, $par_campo, $par_id) {
+        $vr_sql = "DELETE FROM $par_tabela where $par_campo = '$par_id'";
 
-		$vr_sql = "DELETE FROM $par_tabela where $par_campo = '$par_id'";
-
-		mysql_query($vr_sql);
-	}
+        mysql_query($vr_sql);
+    }
 
 }
+
 ?>
