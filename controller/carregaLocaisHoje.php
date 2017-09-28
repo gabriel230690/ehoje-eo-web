@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+
 // Incluir as classes do pacote Modelo
 include ('gravacao/sites/facebook.php');
 include ('../model/bd.php');
