@@ -3,6 +3,9 @@
 ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 
+echo "Teste";
+
+/*
 // Incluir as classes do pacote Modelo
 include ('gravacao/sites/facebook.php');
 include ('../model/bd.php');
@@ -37,6 +40,7 @@ $gb_bd -> desconecta();
 
 // Retornar JSON dos eventos
 echo $gb_resultado;
+*/
 
 ?>
 
