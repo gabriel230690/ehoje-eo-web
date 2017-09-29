@@ -1,0 +1,42 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /web/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !(.*)\.(.*)$
+RewriteCond %{REQUEST_URI} !(.*)/$
+
+###### DESENVOLVIMENTO
+RewriteRule ^(.*)$ http://ehojeapp.com.br/$1/ [L]
+
+###### PRODUCAO
+#RewriteRule ^(.*)$ http://appfaminto.com.br/$1/ [L]
+
+# Redirecionamento
+RewriteRule ^(.)$|^\/$|^index.php$ institucional.home.php
+
+# Login/Cadastro/Senha
+RewriteRule ^login/$ painel.login.php
+RewriteRule ^login/cadastro/$ painel.cadastro.php
+RewriteRule ^login/senha/$ painel.senha.php
+
+# Painel Usuario
+RewriteRule ^painel/$ painel.index.php
+RewriteRule ^painel/endereco/$ painel.endereco.php
+RewriteRule ^painel/endereco/cadastro/$ painel.endereco.cadastro.php
+RewriteRule ^painel/sair/$ painel.sair.php
+
+# Institucional
+RewriteRule ^home/$ institucional.home.php
+RewriteRule ^institucional/fale-conosco/$ institucional.contato.php
+
+# Restaurante/Cardapio
+RewriteRule ^restaurantes/$ institucional.restaurantes.php
+RewriteRule ^restaurante/([0-9]+)\/([a-zA-Z0-9-]*)\/$ institucional.cardapio.php?idRestaurante=$1 [L,E]
+RewriteRule ^restaurante/([0-9]+)\/([0-9]+)\/([a-zA-Z0-9-]*)\/$ institucional.cardapio.php?idRestaurante=$1&idPromocao=$2 [L,E]
+
+# Promoções
+RewriteRule ^promocoes/$ institucional.promocoes.php
+
+</IfModule>
